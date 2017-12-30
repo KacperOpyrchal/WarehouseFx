@@ -40,11 +40,19 @@ public class SceneProvider {
         return btn;
     }
 
+    public static Button contentButton(String text) {
+        Button btn = new Button(text);
+        btn.setId("content");
+        return btn;
+    }
+
+
     public static Button submitButton(String text) {
         Button btn = new Button(text);
         btn.setId("round-red");
         return btn;
     }
+
     public static Spinner<AccountType> accountTypeSpinner() {
         ObservableList<AccountType> types = FXCollections.observableArrayList(STANDARD, WORKER, ADMIN);
         SpinnerValueFactory<AccountType> factory = new SpinnerValueFactory.ListSpinnerValueFactory<AccountType>(types);
