@@ -2,6 +2,8 @@ package sample.Data;
 
 import sample.Data.Builders.CredentialsBuilder;
 import sample.Data.Builders.UserDataBuilder;
+import sample.Data.DatabaseClasses.Manager;
+import sample.Data.DatabaseClasses.Warehouse;
 import sample.Data.Users.User;
 import sample.Data.Users.UserData;
 import sample.Data.Users.UserImp;
@@ -58,4 +60,24 @@ public class DatabaseWrapper {
                 .setAccuntType(WORKER)
                 .build()));
     }
+
+    public static List<Warehouse> loadAllWarehouses() {
+
+        List<Warehouse> list = new ArrayList<>();
+
+        String[] strs = {"dfsdf", "safdjsadj", "magazynek", "penis",
+                "chsfd", "asf", "hghf", "kupa",
+                "ssx", "efjsadj", "cebula i chrzan", "kdjfds",
+                "safdjsretjhadj", "blabla", "jj", "jsadj",
+                "saf", "safdjsadj", "magazynkgo", "safdjsadj",
+                "saaaa", "plmjf", "jakismagazyn"};
+
+        for(int i = 0; i < 20; ++i) {
+            Warehouse warehouse = new Warehouse(i,strs[i], i, new Manager(), new ArrayList<>(), new ArrayList<>());
+            list.add(warehouse);
+        }
+
+        return list;
+    }
+
 }
