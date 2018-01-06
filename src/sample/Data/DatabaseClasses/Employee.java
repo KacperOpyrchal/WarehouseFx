@@ -1,6 +1,12 @@
 package sample.Data.DatabaseClasses;
 
-public class Employee {
+import sample.Tools.Item;
+import sample.Tools.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Employee implements Updatable {
     private String name;
     private String surname;
     private double salary;
@@ -76,5 +82,18 @@ public class Employee {
 
     public void setManager(Manager manager) {
         this.manager = manager;
+    }
+
+    @Override
+    public void update(List<String> values) {
+
+    }
+
+    @Override
+    public List<Item> toItemsList() {
+        List<Item> list = new ArrayList<>();
+        list.add(new MenuItem(name, () -> name.toString()));
+        list.add(new MenuItem("Manager", () -> "".toString()));
+        return list;
     }
 }

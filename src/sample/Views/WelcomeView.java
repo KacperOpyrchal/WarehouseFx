@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import sample.Data.DatabaseClasses.Manager;
-import sample.Data.DatabaseClasses.Section;
 import sample.Data.GlobalStage;
 import sample.Data.DatabaseClasses.Warehouse;
 import sample.Tools.Item;
@@ -22,7 +21,7 @@ public class WelcomeView implements View{
     private Label welcome = label("");
     private Button logOut = button("Log out");
 
-    private List<List<Item>> list = new ArrayList<>();
+    private List<Warehouse> list = new ArrayList<>();
 
     @Override
     public Pane getPane() {
@@ -31,7 +30,7 @@ public class WelcomeView implements View{
         VBox vBox = new VBox(10);
         vBox.setAlignment(Pos.CENTER);
         fillList();
-        GeneralTableView generalTableView = new GeneralTableView(list);
+        GeneralTableView<Warehouse> generalTableView = new GeneralTableView<>(list);
         vBox.getChildren().addAll(welcome, generalTableView.getPane(), logOut);
 
         return vBox;
@@ -46,8 +45,8 @@ public class WelcomeView implements View{
                 "saaaa", "plmjf", "jakismagazyn"};
 
         for(int i = 0; i < 20; ++i) {
-            Warehouse warehouse = new Warehouse(i,strs[i], i, i, i, new Manager());
-            list.add(warehouse.toItemList());
+            Warehouse warehouse = new Warehouse(i,strs[i], i, new Manager(), new ArrayList<>(), new ArrayList<>());
+            list.add(warehouse);
         }
     }
 

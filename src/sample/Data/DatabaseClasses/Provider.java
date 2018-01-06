@@ -1,8 +1,12 @@
 package sample.Data.DatabaseClasses;
 
+import sample.Tools.Item;
+import sample.Tools.MenuItem;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Provider {
+public class Provider implements Updatable{
 
     private String companyName;
     private int id;
@@ -49,5 +53,19 @@ public class Provider {
 
     public void setWarehouses(List<Warehouse> warehouses) {
         this.warehouses = warehouses;
+    }
+
+    @Override
+    public void update(List<String> values) {
+
+    }
+
+    @Override
+    public List<Item> toItemsList() {
+        List<Item> list = new ArrayList<>();
+        list.add(new MenuItem(companyName, () -> companyName.toString()));
+        list.add(new MenuItem("Products", () -> "".toString()));
+        list.add(new MenuItem("Warehouses", ()->"".toString()));
+        return list;
     }
 }

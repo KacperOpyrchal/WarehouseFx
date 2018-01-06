@@ -1,19 +1,24 @@
 package sample.Data.DatabaseClasses;
 
+import sample.Tools.Item;
+import sample.Tools.MenuItem;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Product {
+public class Product implements Updatable {
     private int id;
     private String name;
     private double price;
     private double weight;
+    private int amount;
     private List<Section> sections;
     private List<Provider> providers;
 
     public Product() {
     }
 
-    public Product(int id, String name, double price, double weight, List<Section> sections, List<Provider> providers) {
+    public Product(int id, String name, double price, double weight, int amount, List<Section> sections, List<Provider> providers) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -68,5 +73,28 @@ public class Product {
 
     public void setProviders(List<Provider> providers) {
         this.providers = providers;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public void update(List<String> values) {
+
+    }
+
+    @Override
+    public List<Item> toItemsList() {
+        List<Item> list = new ArrayList<>();
+        list.add(new MenuItem(name, () -> name.toString()));
+        list.add(new MenuItem("Sections", () -> "".toString()));
+        list.add(new MenuItem("Providers", ()->"".toString()));
+        return list;
+
     }
 }

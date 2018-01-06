@@ -50,6 +50,18 @@ public class SceneProvider {
         return btn;
     }
 
+    public static Button greenButton(String text) {
+        Button btn = new Button(text);
+        btn.setId("green");
+        return btn;
+    }
+
+    public static Button redButton(String text) {
+        Button btn = new Button(text);
+        btn.setId("round-red");
+        return btn;
+    }
+
     public static Spinner<AccountType> accountTypeSpinner() {
         ObservableList<AccountType> types = FXCollections.observableArrayList(STANDARD, WORKER, ADMIN);
         SpinnerValueFactory<AccountType> factory = new SpinnerValueFactory.ListSpinnerValueFactory<AccountType>(types);

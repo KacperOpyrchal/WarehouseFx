@@ -1,6 +1,12 @@
 package sample.Data.DatabaseClasses;
 
-public class Equipment {
+import sample.Tools.Item;
+import sample.Tools.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Equipment implements Updatable {
     String name;
     int id;
     Section section;
@@ -36,5 +42,17 @@ public class Equipment {
 
     public void setSection(Section section) {
         this.section = section;
+    }
+
+    @Override
+    public void update(List<String> values) {
+    }
+
+    @Override
+    public List<Item> toItemsList() {
+        List<Item> list = new ArrayList<>();
+        list.add(new MenuItem(name, () -> name.toString()));
+        list.add(new MenuItem("Section", () -> "".toString()));
+        return list;
     }
 }
