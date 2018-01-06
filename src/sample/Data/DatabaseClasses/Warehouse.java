@@ -1,6 +1,5 @@
-package sample.Data;
+package sample.Data.DatabaseClasses;
 
-import sample.Tools.Action;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
@@ -14,15 +13,17 @@ public class Warehouse {
     private int groupId;
     private int capacity;
     private int value;
-    private int headmasterId;
+    private Manager manager;
+    private List<Provider> providers;
+    private List<Section> sections;
 
-    public Warehouse(int id, String name, int groupId, int capacity, int value, int headmasterId) {
+    public Warehouse(int id, String name, int groupId, int capacity, int value, Manager manager) {
         this.id = id;
         this.name = name;
         this.groupId = groupId;
         this.capacity = capacity;
         this.value = value;
-        this.headmasterId = headmasterId;
+        this.manager = manager;
     }
 
     public int getId() {
@@ -65,12 +66,12 @@ public class Warehouse {
         this.value = value;
     }
 
-    public int getHeadmasterId() {
-        return headmasterId;
+    public Manager getManager() {
+        return manager;
     }
 
-    public void setHeadmasterId(int headmasterId) {
-        this.headmasterId = headmasterId;
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     public List<Item> toItemList() {
@@ -80,7 +81,7 @@ public class Warehouse {
         list.add(new MenuItem(groupId+"", () -> groupId = 0));
         list.add(new MenuItem(capacity+"", () -> capacity = 0));
         list.add(new MenuItem(value+"", () -> value = 0));
-        list.add(new MenuItem(headmasterId+"", () -> headmasterId = 0));
+        list.add(new MenuItem(manager +"", () -> manager = new Manager()));
         return list;
     }
 }

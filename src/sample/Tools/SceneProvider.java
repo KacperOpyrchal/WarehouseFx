@@ -1,26 +1,23 @@
 package sample.Tools;
 
+import com.sun.tools.javac.util.Pair;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import sample.Controller;
 import sample.Data.AccountType;
 import sample.Views.NavigationView;
 import sample.Views.View;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static sample.Data.AccountType.*;
 
 public class SceneProvider {
 
-    public static NavigationView navigationView = new NavigationView();
+    private static NavigationView navigationView = new NavigationView();
 
     public static Label label(String text) {
         return new Label(text);
@@ -49,7 +46,7 @@ public class SceneProvider {
 
     public static Button submitButton(String text) {
         Button btn = new Button(text);
-        btn.setId("round-red");
+        btn.setId("rich-blue");
         return btn;
     }
 
@@ -70,14 +67,15 @@ public class SceneProvider {
         return gridPane;
     }
 
-    public static Scene generalUseScene(View view) {
+    public static Scene generalUseScene(Pair<View, String> view) {
         navigationView.updateStack(view);
         return generalReuseScene(view);
     }
 
-    public static Scene generalReuseScene(View view) {
+    public static Scene generalReuseScene(Pair<View, String> view) {
+        navigationView.updateTitle(view.snd);
         VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(navigationView.getPane(), view.getPane());
+        vBox.getChildren().addAll(navigationView.getPane(), view.fst.getPane());
         Scene scene = new Scene(vBox, 500, 500);
         String css = Controller.class.getResource("style.css").toExternalForm();
         scene.getStylesheets().add(css);

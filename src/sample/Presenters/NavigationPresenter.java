@@ -1,5 +1,6 @@
 package sample.Presenters;
 
+import com.sun.tools.javac.util.Pair;
 import sample.Data.GlobalStage;
 import sample.Views.NavigationView;
 import sample.Views.View;
@@ -10,7 +11,7 @@ import java.util.List;
 public class NavigationPresenter {
 
     private NavigationView view;
-    private List<View> commandStack = new ArrayList<>();
+    private List<Pair<View, String>> commandStack = new ArrayList<>();
     private int i = -1;
 
     public NavigationPresenter(NavigationView navigationView) {
@@ -37,7 +38,8 @@ public class NavigationPresenter {
         }
     }
 
-    public void updateStack(View view) {
+    public void updateStack(Pair<View, String> view) {
+        this.view.updateTitle(view.snd);
         i++;
         if(commandStack.size() != i) {
             for(int j = i; j < commandStack.size(); ++j) {

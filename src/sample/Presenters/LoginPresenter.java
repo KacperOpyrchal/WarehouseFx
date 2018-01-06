@@ -1,5 +1,6 @@
 package sample.Presenters;
 
+import com.sun.tools.javac.util.Pair;
 import sample.Data.Builders.CredentialsBuilder;
 import sample.Data.DatabaseWrapper;
 import sample.Data.GlobalStage;
@@ -24,7 +25,7 @@ public class LoginPresenter {
 
         if(DatabaseWrapper.verifyUser(user)) {
             loginView.setVisibilityOfValidationMessage(false);
-            GlobalStage.getGlobalStage().introduceNewScene(new WelcomeView());
+            GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(new WelcomeView(), "Welcome"));
         } else {
             loginView.setVisibilityOfValidationMessage(true);
         }
@@ -33,6 +34,6 @@ public class LoginPresenter {
     public void register() {
         RegisterView registerView = new RegisterView();
 
-        GlobalStage.getGlobalStage().introduceNewScene(registerView);
+        GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(registerView, "Register"));
     }
 }

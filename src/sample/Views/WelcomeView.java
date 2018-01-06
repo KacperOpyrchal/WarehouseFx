@@ -1,16 +1,16 @@
 package sample.Views;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import com.sun.tools.javac.util.Pair;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import sample.Data.DatabaseClasses.Manager;
+import sample.Data.DatabaseClasses.Section;
 import sample.Data.GlobalStage;
-import sample.Data.Warehouse;
+import sample.Data.DatabaseClasses.Warehouse;
 import sample.Tools.Item;
-import sample.Tools.SceneProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,13 +46,13 @@ public class WelcomeView implements View{
                 "saaaa", "plmjf", "jakismagazyn"};
 
         for(int i = 0; i < 20; ++i) {
-            Warehouse warehouse = new Warehouse(i,strs[i], i, i, i, i);
+            Warehouse warehouse = new Warehouse(i,strs[i], i, i, i, new Manager());
             list.add(warehouse.toItemList());
         }
     }
 
     @Override
     public void setUpListeners() {
-        logOut.setOnAction(event -> GlobalStage.getGlobalStage().introduceNewScene(new LoginView()));
+        logOut.setOnAction(event -> GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(new LoginView(), "Login")));
     }
 }

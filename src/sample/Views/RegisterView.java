@@ -1,5 +1,6 @@
 package sample.Views;
 
+import com.sun.tools.javac.util.Pair;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -59,7 +60,7 @@ public class RegisterView implements View{
                                 .setSurname(surname.getText())
                                 .build())) {
 
-                    GlobalStage.getGlobalStage().introduceNewScene(new WelcomeView());
+                    GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(new WelcomeView(), "Welcome"));
                 } else {
                     wrongLabel.setText("Username already exists!");
                 }

@@ -26,6 +26,8 @@ class GeneralTableView implements View {
 
     @Override
     public Pane getPane() {
+        setUpListeners();
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(gridPane);
         gridPane.setVgap(2);

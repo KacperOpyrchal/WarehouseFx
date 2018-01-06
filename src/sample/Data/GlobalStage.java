@@ -1,5 +1,6 @@
 package sample.Data;
 
+import com.sun.tools.javac.util.Pair;
 import javafx.stage.Stage;
 import sample.Tools.SceneProvider;
 import sample.Views.View;
@@ -16,11 +17,11 @@ public class GlobalStage {
         this.stage = stage;
     }
 
-    public void introduceNewScene(View view) {
+    public void introduceNewScene(Pair<View, String> view) {
         stage.setScene(SceneProvider.generalUseScene(view));
     }
 
-    public void getSceneFromStack(View view) {
+    public void getSceneFromStack(Pair<View, String> view) {
         stage.setScene(SceneProvider.generalReuseScene(view));
     }
 
