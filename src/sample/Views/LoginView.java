@@ -49,9 +49,7 @@ public class LoginView implements View {
 
     @Override
     public void setUpListeners() {
-        logInBtn.setOnAction(event -> {
-            loginPresenter.login(login.getText(), password.getText());
-        });
+        logInBtn.setOnAction(event -> loginPresenter.login(login.getText(), password.getText()));
 
         registerBtn.setOnAction(event -> loginPresenter.register());
     }

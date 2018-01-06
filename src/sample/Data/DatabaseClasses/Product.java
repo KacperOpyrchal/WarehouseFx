@@ -1,10 +1,14 @@
 package sample.Data.DatabaseClasses;
 
+import com.sun.tools.javac.util.Pair;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static sample.Tools.SceneProvider.pair;
+import static sample.Tools.SceneProvider.pairList;
 
 public class Product implements Updatable {
     private int id;
@@ -14,6 +18,7 @@ public class Product implements Updatable {
     private int amount;
     private List<Section> sections;
     private List<Provider> providers;
+    private List<Item> list = null;
 
     public Product() {
     }
@@ -85,12 +90,25 @@ public class Product implements Updatable {
 
     @Override
     public void update(List<String> values) {
+        id = Integer.parseInt(values.get(0));
+        name = values.get(1);
+        price = Double.parseDouble(values.get(2));
+        weight = Double.parseDouble(values.get(3));
+        amount = Integer.parseInt(values.get(4));
+    }
 
+    @Override
+    public List<Pair<String, String>> getUpdatableList() {
+        return pairList(pair("ID", id + ""),
+                pair("Name", name),
+                pair("Price", price + ""),
+                pair("Weight", weight + ""),
+                pair("Amount", amount + ""));
     }
 
     @Override
     public List<Item> toItemsList() {
-        List<Item> list = new ArrayList<>();
+        list = new ArrayList<>();
         list.add(new MenuItem(name, () -> name.toString()));
         list.add(new MenuItem("Sections", () -> "".toString()));
         list.add(new MenuItem("Providers", ()->"".toString()));

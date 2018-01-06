@@ -13,6 +13,10 @@ import sample.Data.AccountType;
 import sample.Views.NavigationView;
 import sample.Views.View;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static sample.Data.AccountType.*;
 
 public class SceneProvider {
@@ -20,11 +24,17 @@ public class SceneProvider {
     private static NavigationView navigationView = new NavigationView();
 
     public static Label label(String text) {
+        Label label = new Label(text);
+        label.setStyle("-fx-font-size: 18;");
         return new Label(text);
     }
 
     public static TextField textField() {
         return new TextField();
+    }
+
+    public static TextField textField(String str) {
+        return new TextField(str);
     }
 
     public static PasswordField passwordField() {
@@ -41,6 +51,14 @@ public class SceneProvider {
         Button btn = new Button(text);
         btn.setId("content");
         return btn;
+    }
+
+    public static Pair<String, String> pair(String first, String second) {
+        return new Pair<>(first, second);
+    }
+
+    public static List<Pair<String, String>> pairList(Pair<String, String>... pairs) {
+        return new ArrayList<>(Arrays.asList(pairs));
     }
 
 
@@ -88,7 +106,7 @@ public class SceneProvider {
         navigationView.updateTitle(view.snd);
         VBox vBox = new VBox(10);
         vBox.getChildren().addAll(navigationView.getPane(), view.fst.getPane());
-        Scene scene = new Scene(vBox, 500, 500);
+        Scene scene = new Scene(vBox, 850, 650);
         String css = Controller.class.getResource("style.css").toExternalForm();
         scene.getStylesheets().add(css);
         vBox.setId("pane");

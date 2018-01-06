@@ -1,12 +1,15 @@
 package sample.Data.DatabaseClasses;
 
+import com.sun.tools.javac.util.Pair;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Warehouse implements Updatable{
+import static sample.Tools.SceneProvider.*;
+
+public class Warehouse implements Updatable {
 
     private int id;
     private String name;
@@ -14,6 +17,7 @@ public class Warehouse implements Updatable{
     private Manager manager;
     private List<Provider> providers;
     private List<Section> sections;
+    private List<Item> list = null;
 
     public Warehouse() {
     }
@@ -77,11 +81,18 @@ public class Warehouse implements Updatable{
 
     @Override
     public List<Item> toItemsList() {
-        List<Item> list = new ArrayList<>();
-        list.add(new MenuItem(name, () -> name = ""));
-        list.add(new MenuItem("Providers", () -> capacity = 0));
-        list.add(new MenuItem("Sections", () -> manager = new Manager()));
+        list = new ArrayList<>();
+        list.add(new MenuItem(id+""));
+        list.add(new MenuItem(name));
+        list.add(new MenuItem(capacity + ""));
+        list.add(new MenuItem("Providers"));
+        list.add(new MenuItem("Sections"));
         return list;
+    }
+
+    @Override
+    public List<Pair<String, String>> getUpdatableList() {
+        return pairList(pair("ID", id + ""), pair("Name", name), pair("Capacity", capacity + ""));
     }
 
     @Override
@@ -89,5 +100,11 @@ public class Warehouse implements Updatable{
         id = Integer.parseInt(values.get(0));
         name = values.get(1);
         capacity = Integer.parseInt(values.get(2));
+
+        if(list != null) {
+            list.get(0).updateItem(id + "");
+            list.get(1).updateItem(name);
+            list.get(2).updateItem(capacity + "");
+        }
     }
 }

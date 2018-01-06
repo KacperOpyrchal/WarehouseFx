@@ -17,4 +17,6 @@ public interface Item {
     Button getButton();
 
     void setButton(Button button);
+
+    void updateItem(String name);
 }

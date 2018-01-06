@@ -1,29 +1,43 @@
 package sample.Data.DatabaseClasses;
 
+import com.sun.tools.javac.util.Pair;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static sample.Tools.SceneProvider.*;
+
 public class Section implements Updatable {
     private int id;
     private String name;
     private Manager manager;
+    private Warehouse warehouse;
     private List<Product> products;
     private List<Employee> employees;
     private List<Equipment> equipment;
+    private List<Item> list = null;
 
     public Section() {
     }
 
-    public Section(int id, String name, Manager manager, List<Product> products, List<Employee> employees, List<Equipment> equipment) {
+    public Section(int id, String name, Manager manager, Warehouse warehouse, List<Product> products, List<Employee> employees, List<Equipment> equipment) {
         this.id = id;
         this.name = name;
         this.manager = manager;
+        this.warehouse = warehouse;
         this.products = products;
         this.employees = employees;
         this.equipment = equipment;
+    }
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
     }
 
     public int getId() {
@@ -76,13 +90,24 @@ public class Section implements Updatable {
 
     @Override
     public void update(List<String> values) {
+        id = Integer.parseInt(values.get(0));
+        name = values.get(1);
 
+        if(list != null) {
+            list.get(0).updateItem(name);
+        }
+    }
+
+    @Override
+    public List<Pair<String, String>> getUpdatableList() {
+        return pairList(pair("ID", id + ""), pair("Name", name));
     }
 
     @Override
     public List<Item> toItemsList() {
-        List<Item> list = new ArrayList<>();
+        list = new ArrayList<>();
         list.add(new MenuItem(name, () -> name.toString()));
+        list.add(new MenuItem("Warehouse", () -> "".toString()));
         list.add(new MenuItem("Products", () -> "".toString()));
         list.add(new MenuItem("Employees", () -> "".toString()));
         list.add(new MenuItem("Equipment", () -> "".toString()));

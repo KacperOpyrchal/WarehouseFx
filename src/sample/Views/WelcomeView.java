@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import sample.Data.DatabaseWrapper;
 import sample.Data.GlobalStage;
 import sample.Data.DatabaseClasses.Warehouse;
+import sample.Tools.SceneProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +21,17 @@ public class WelcomeView implements View{
     private Label welcome = label("");
     private Button logOut = button("Log out");
 
-    private List<Warehouse> list = new ArrayList<>();
-
     @Override
     public Pane getPane() {
         setUpListeners();
 
         VBox vBox = new VBox(10);
         vBox.setAlignment(Pos.CENTER);
-        list = DatabaseWrapper.loadAllWarehouses();
-        GeneralTableView<Warehouse> generalTableView = new GeneralTableView<>(list);
+
+        List<Warehouse> list = DatabaseWrapper.loadAllWarehouses();
+        GeneralTableView<Warehouse> generalTableView = new GeneralTableView<>(list,
+                label("ID"), label("Name"), label("Capacity"));
+
         vBox.getChildren().addAll(welcome, generalTableView.getPane(), logOut);
 
         return vBox;

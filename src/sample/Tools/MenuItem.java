@@ -57,4 +57,10 @@ public class MenuItem implements Item {
     public void setButton(Button button) {
         this.button = button;
     }
+
+    @Override
+    public void updateItem(String name) {
+        this.name = name;
+        button.setText(name);
+    }
 }
