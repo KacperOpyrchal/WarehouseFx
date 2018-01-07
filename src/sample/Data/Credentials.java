@@ -5,6 +5,15 @@ public class Credentials {
     private String password;
     private AccountType accountType;
 
+    public Credentials(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.accountType = AccountType.STANDARD;
+    }
+
+    public Credentials() {
+    }
+
     public String getUsername() {
         return username;
     }

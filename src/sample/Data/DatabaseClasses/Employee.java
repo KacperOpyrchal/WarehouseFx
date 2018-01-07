@@ -67,10 +67,10 @@ public class Employee implements Updatable {
     @Override
     public void addToDatabase() {
         String sql = "INSERT INTO EMPLOYEES(ID, NAME, SURNAME, POSITION, SALARY, SECTION, MANAGER) VALUES (" +
-                id + ", " +
-                name + ", " +
-                surname + ", " +
-                position + ", " +
+                id + ", '" +
+                name + "', '" +
+                surname + "', '" +
+                position + "', " +
                 salary + ", " +
                 sectionID + ", " +
                 managerID + ");";
@@ -79,7 +79,6 @@ public class Employee implements Updatable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

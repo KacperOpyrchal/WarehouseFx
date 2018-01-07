@@ -1,6 +1,6 @@
 package sample;
 
-import sample.Data.DatabaseClasses.Warehouse;
+import sample.Data.DatabaseClasses.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,11 +11,11 @@ public class SQLiteJDBC {
     private static final String sqlite = "jdbc:sqlite:database.db";
     public static void main( String args[] ) {
         try {
-            Warehouse ware = new Warehouse(1, "mikedfdsfle", 12, 1, null, null);
-            ware.addToDatabase();
-            ResultSet resultSet = SQLiteJDBC.proceedQuery( "SELECT * FROM WAREHOUSES;" );
+            Section e = new Section(6, "plyny", 1, 1, null, null, null);
+            e.addToDatabase();
+            ResultSet resultSet = SQLiteJDBC.proceedQuery( "SELECT * FROM SECTIONS;" );
             while ( resultSet.next() ) {
-                System.out.println(resultSet.getInt("ID") + " "  + resultSet.getString("NAME") + " " + resultSet.getInt("CAPACITY") + " " + resultSet.getInt("MANAGER"));
+                System.out.println(resultSet.getInt("ID") + " "  + resultSet.getString("NAME"));
             }
 
         } catch (Exception e) {
