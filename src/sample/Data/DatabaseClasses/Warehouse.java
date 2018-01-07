@@ -1,10 +1,12 @@
 package sample.Data.DatabaseClasses;
 
 import com.sun.tools.javac.util.Pair;
+import sample.SQLiteJDBC;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class Warehouse implements Updatable {
     private int id;
     private String name;
     private int capacity;
-    private Manager manager;
+    private int managerID;
     private List<Provider> providers;
     private List<Section> sections;
     private List<Item> list = null;
@@ -23,13 +25,51 @@ public class Warehouse implements Updatable {
     public Warehouse() {
     }
 
-    public Warehouse(int id, String name, int capacity, Manager manager, List<Provider> providers, List<Section> sections) {
+    public Warehouse(int id, String name, int capacity, int manager, List<Provider> providers, List<Section> sections) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
-        this.manager = manager;
+        this.managerID = manager;
         this.providers = providers;
         this.sections = sections;
+    }
+
+    public static void createTable() {
+        String sql = "CREATE TABLE WAREHOUSES( " +
+                " ID INT PRIMARY KEY NOT NULL, " +
+                " NAME TEXT NOT NULL, " +
+                " CAPACITY INT NOT NULL, " +
+                " MANAGER INT NOT NULL);";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static List<Warehouse> getTable() throws Exception {
+        String query = "SELECT * FROM WAREHOUSES";
+        List<Warehouse> list = new ArrayList<>();
+        ResultSet cursor = SQLiteJDBC.proceedQuery(query);
+        while ( cursor.next() ) {
+            list.add(new Warehouse(cursor.getInt("ID"), cursor.getString("NAME"), cursor.getInt("CAPACITY"), cursor.getInt("MANAGER"), null, null));
+        }
+        return list;
+    }
+
+    @Override
+    public void addToDatabase() {
+        String sql = "INSERT INTO WAREHOUSES(ID, NAME, CAPACITY, MANAGER) VALUES ( " +
+                id + ", '" +
+                name + "', " +
+                capacity + ", " +
+                managerID + ");";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int getId() {
@@ -56,12 +96,12 @@ public class Warehouse implements Updatable {
         this.capacity = capacity;
     }
 
-    public Manager getManager() {
-        return manager;
+    public int getManagerID() {
+        return managerID;
     }
 
-    public void setManager(Manager manager) {
-        this.manager = manager;
+    public void setManagerID(int managerID) {
+        this.managerID = managerID;
     }
 
     public List<Provider> getProviders() {
@@ -96,7 +136,7 @@ public class Warehouse implements Updatable {
         printWriter.println(id +
                 ", " + name +
                 ", " + capacity +
-                ", " + manager.getId());
+                ", " + managerID);
         for (Provider provider : providers) {
             printWriter.print(provider.getId() + ", ");
         }
@@ -124,5 +164,15 @@ public class Warehouse implements Updatable {
             list.get(1).updateItem(name);
             list.get(2).updateItem(capacity + "");
         }
+
+        String sql = "UPDATE WAREHOUSES SET " +
+                " NAME = '" + name + "', " +
+                " CAPACITY = " + capacity + " WHERE ID = " + id +";";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -1,10 +1,12 @@
 package sample.Data.DatabaseClasses;
 
 import com.sun.tools.javac.util.Pair;
+import sample.SQLiteJDBC;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,26 +18,67 @@ public class Manager implements Updatable {
     private String name;
     private String surname;
     private double salary;
-    private Section section;
+    private int sectionID;
     private List<Item> list = null;
 
     public Manager() {
     }
 
-    public Manager(Section section, String name, String surname, int id, double salary) {
-        this.section = section;
+    public Manager(int section, String name, String surname, int id, double salary) {
+        this.sectionID = section;
         this.name = name;
         this.surname = surname;
         this.id = id;
         this.salary = salary;
     }
 
-    public Section getSection() {
-        return section;
+    public static void createTable() {
+        String sql = "CREATE TABLE MANAGERS (" +
+                " ID INT PRIMARY KEY NOT NULL, " +
+                " NAME NEXT NOT NULL, " +
+                " SURNAME TEXT NOT NULL, " +
+                " SALARY REAL NOT NULL, " +
+                " SECTION INT NOT NULL);";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public void setSections(Section section) {
-        this.section = section;
+    public static List<Manager> getTable() throws Exception {
+        String query = "SELECT * FROM MANAGERS";
+        List<Manager> list = new ArrayList<>();
+        ResultSet cursor = SQLiteJDBC.proceedQuery(query);
+        while ( cursor.next() ) {
+            list.add(new Manager(cursor.getInt("SECTION"), cursor.getString("NAME"), cursor.getString("SURNAME"), cursor.getInt("ID"), cursor.getDouble("SALARY")));
+        }
+        return list;
+    }
+
+    @Override
+    public void addToDatabase() {
+        String sql = "INSERT INTO MANAGERS(ID, NAME, SURNAME, SALARY, SECTION) VALUES (" +
+                id + ", '" +
+                name + "', '" +
+                surname + "', " +
+                salary + ", " +
+                sectionID + ");";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public int getSectionID() {
+        return sectionID;
+    }
+
+    public void setSections(int section) {
+        this.sectionID = section;
     }
 
     public String getName() {
@@ -80,6 +123,17 @@ public class Manager implements Updatable {
         if(list != null) {
             list.get(0).updateItem(name);
         }
+
+        String sql = "UPDATE MANAGERS SET " +
+                " NAME = '" + name + "', " +
+                " SURNAME = '" + surname + "', " +
+                " SALARY = " + salary + " WHERE ID = " + id + ";";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -101,7 +155,7 @@ public class Manager implements Updatable {
                 ", " + name +
                 ", " + surname +
                 ", " + salary +
-                ", " + section.getId());
+                ", " + sectionID);
         printWriter.flush();
     }
 }

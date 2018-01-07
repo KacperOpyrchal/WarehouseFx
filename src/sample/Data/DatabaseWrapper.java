@@ -62,19 +62,12 @@ public class DatabaseWrapper {
     }
 
     public static List<Warehouse> loadAllWarehouses() {
-
-        List<Warehouse> list = new ArrayList<>();
-
-        String[] strs = {"Magazyn warzyw", "Magazyn Owocow", "Magazyn Owocow 2", "Magazyn Samochodowy",
-                "Magazyn ksiazek", "Magazyn mebli", "Magazyn dzikow", "Magazyn mikelow",
-                "Magazyn komputerow", "Magazyn gier"};
-
-        for(int i = 0; i < strs.length; ++i) {
-            Warehouse warehouse = new Warehouse(i,strs[i], i, new Manager(), new ArrayList<>(), new ArrayList<>());
-            list.add(warehouse);
+        try {
+            return Warehouse.getTable();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return list;
+        return null;
     }
 
 }

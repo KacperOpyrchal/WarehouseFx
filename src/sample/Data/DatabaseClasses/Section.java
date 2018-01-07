@@ -1,10 +1,12 @@
 package sample.Data.DatabaseClasses;
 
 import com.sun.tools.javac.util.Pair;
+import sample.SQLiteJDBC;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +15,8 @@ import static sample.Tools.SceneProvider.*;
 public class Section implements Updatable {
     private int id;
     private String name;
-    private Manager manager;
-    private Warehouse warehouse;
+    private int managerID;
+    private int warehouseID;
     private List<Product> products;
     private List<Employee> employees;
     private List<Equipment> equipment;
@@ -23,22 +25,62 @@ public class Section implements Updatable {
     public Section() {
     }
 
-    public Section(int id, String name, Manager manager, Warehouse warehouse, List<Product> products, List<Employee> employees, List<Equipment> equipment) {
+    public Section(int id, String name, int manager, int warehouse, List<Product> products, List<Employee> employees, List<Equipment> equipment) {
         this.id = id;
         this.name = name;
-        this.manager = manager;
-        this.warehouse = warehouse;
+        this.managerID = manager;
+        this.warehouseID = warehouse;
         this.products = products;
         this.employees = employees;
         this.equipment = equipment;
     }
 
-    public Warehouse getWarehouse() {
-        return warehouse;
+    public static void createTable() {
+        String sql = "CREATE TABLE SECTIONS( " +
+                " ID INT PRIMARY KEY NOT NULL, " +
+                " NAME TEXT NOT NULL, " +
+                " MANAGER INT NOT NULL, " +
+                " WAREHOUSE INT NOT NULL);";
+
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
+    public static List<Section> getTable() throws Exception {
+        String query = "SELECT * FROM SECTIONS";
+        List<Section> list = new ArrayList<>();
+        ResultSet cursor = SQLiteJDBC.proceedQuery(query);
+        while ( cursor.next() ) {
+            list.add(new Section(cursor.getInt("ID"), cursor.getString("NAME"), cursor.getInt("MANAGER"), cursor.getInt("WAREHOUSE"), null, null, null));
+        }
+        return list;
+    }
+
+    @Override
+    public void addToDatabase() {
+        String sql = "INSERT INTO SECTIONS(ID, NAME, MANAGER, WAREHOUSE) VALUES ( " +
+                id + ", '" +
+                name + "', " +
+                managerID + ", " +
+                warehouseID + ");";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public int getWarehouseID() {
+        return warehouseID;
+    }
+
+    public void setWarehouseID(int warehouseID) {
+        this.warehouseID = warehouseID;
     }
 
     public int getId() {
@@ -57,12 +99,12 @@ public class Section implements Updatable {
         this.name = name;
     }
 
-    public Manager getManager() {
-        return manager;
+    public int getManagerID() {
+        return managerID;
     }
 
-    public void setManager(Manager manager) {
-        this.manager = manager;
+    public void setManagerID(int managerID) {
+        this.managerID = managerID;
     }
 
     public List<Product> getProducts() {
@@ -97,6 +139,14 @@ public class Section implements Updatable {
         if(list != null) {
             list.get(0).updateItem(name);
         }
+
+        String sql = "UPDATE SECTIONS SET NAME = '" + name + "' WHERE ID = " + id + ";";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -119,8 +169,8 @@ public class Section implements Updatable {
     public void writeToFile(PrintWriter printWriter) {
         printWriter.println(id +
                 ", " + name +
-                ", " + manager.getId() +
-                ", " + warehouse.getId());
+                ", " + managerID +
+                ", " + warehouseID);
         for (Product product : products) {
             printWriter.print(product.getId() + ", ");
         }

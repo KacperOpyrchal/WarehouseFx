@@ -1,10 +1,12 @@
 package sample.Data.DatabaseClasses;
 
 import com.sun.tools.javac.util.Pair;
+import sample.SQLiteJDBC;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +19,63 @@ public class Product implements Updatable {
     private double price;
     private double weight;
     private int amount;
-    private Section section;
+    private int sectionID;
     private List<Provider> providers;
     private List<Item> list = null;
 
     public Product() {
     }
 
-    public Product(int id, String name, double price, double weight, int amount, Section section, List<Provider> providers) {
+    public Product(int id, String name, double price, double weight, int amount, int section, List<Provider> providers) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.weight = weight;
-        this.section = section;
+        this.sectionID = section;
         this.providers = providers;
+    }
+
+    public static void createTable() {
+        String sql = "CREATE TABLE PRODUCTS(" +
+                " ID INT PRIMARY KEY NOT NULL, " +
+                " NAME TEXT NOT NULL, " +
+                " PRICE REAL NOT NULL, " +
+                " WEIGHT REAL NOT NULL, " +
+                " AMOUNT INT NOT NULL, " +
+                " SECTION INT NOT NULL);";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static List<Product> getTable() throws Exception {
+        String query = "SELECT * FROM PRODUCTS";
+        List<Product> list = new ArrayList<>();
+        ResultSet cursor = SQLiteJDBC.proceedQuery(query);
+        while ( cursor.next() ) {
+            list.add(new Product(cursor.getInt("ID"), cursor.getString("NAME"), cursor.getDouble("PRICE"), cursor.getDouble("WEIGHT"), cursor.getInt("AMOUNT"), cursor.getInt("SECTION"), null));
+        }
+        return list;
+    }
+
+    @Override
+    public void addToDatabase() {
+        String sql = "INSERT INTO PRODUCTS VALUES( " +
+                id + ", '" +
+                name + "', " +
+                price + ", " +
+                weight + ", " +
+                amount + ", " +
+                sectionID + ");";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public int getId() {
@@ -65,12 +110,12 @@ public class Product implements Updatable {
         this.weight = weight;
     }
 
-    public Section getSections() {
-        return section;
+    public int getSections() {
+        return sectionID;
     }
 
-    public void setSections(Section section) {
-        this.section = section;
+    public void setSections(int section) {
+        this.sectionID = section;
     }
 
     public List<Provider> getProviders() {
@@ -96,6 +141,18 @@ public class Product implements Updatable {
         price = Double.parseDouble(values.get(2));
         weight = Double.parseDouble(values.get(3));
         amount = Integer.parseInt(values.get(4));
+
+        String sql = "UPDATE PRODUCTS SET " +
+                "NAME = '" + name + "', " +
+                "PRICE = " + price + ", " +
+                "WEIGHT = " + weight + ", " +
+                "AMOUNT = " + amount + " WHERE ID = " + id + ";";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -124,7 +181,7 @@ public class Product implements Updatable {
                 ", " + price +
                 ", " + weight +
                 ", " + amount +
-                ", " + section.getId());
+                ", " + sectionID);
         for (Provider provider: providers) {
             printWriter.print(provider.getId() + ", ");
         }

@@ -15,4 +15,6 @@ public interface Updatable {
     List<Item> toItemsList();
 
     void writeToFile(PrintWriter printWriter);
+
+    void addToDatabase();
 }

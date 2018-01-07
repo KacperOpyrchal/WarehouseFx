@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sample.Data.DatabaseClasses.Updatable;
+import sample.Tools.SceneProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import static sample.Tools.SceneProvider.*;
 public class EditView implements View{
 
     private List<TextField> fields = new ArrayList<>();
-    private GridPane panes = new GridPane();
+    private GridPane panes = gridPane();
 
     private Button updateButton = submitButton("Update");
 
@@ -36,6 +37,10 @@ public class EditView implements View{
             TextField textField = textField(str.snd);
             fields.add(textField);
             panes.addRow(i, new Label(str.fst), textField);
+            if(i == 0) {
+                textField.setDisable(true);
+            }
+
             i++;
         }
     }

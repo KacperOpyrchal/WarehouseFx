@@ -1,10 +1,12 @@
 package sample.Data.DatabaseClasses;
 
 import com.sun.tools.javac.util.Pair;
+import sample.SQLiteJDBC;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,41 @@ public class Provider implements Updatable {
         this.id = id;
         this.products = products;
         this.warehouses = warehouses;
+    }
+
+    public static void createTable() {
+        String sql = "CREATE TABLE PROVIDERS( " +
+                " ID INT PRIMARY KEY NOT NULL, " +
+                " COMPANY_NAME TEXT NOT NULL);";
+
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    @Override
+    public void addToDatabase() {
+        String sql = "INSERT INTO PROVIDERS(ID, COMPANY_NAME) VALUES ( " +
+                id + ", '" +
+                companyName + "');";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static List<Provider> getTable() throws Exception {
+        String query = "SELECT * FROM PROVIDERS";
+        List<Provider> list = new ArrayList<>();
+        ResultSet cursor = SQLiteJDBC.proceedQuery(query);
+        while ( cursor.next() ) {
+            list.add(new Provider(cursor.getString("NAME"), cursor.getInt("ID"), null, null));
+        }
+        return list;
     }
 
     public String getCompanyName() {
@@ -69,6 +106,14 @@ public class Provider implements Updatable {
         if(list != null) {
             list.get(0).updateItem(companyName);
         }
+
+        String sql = "UPDATE PROVIDERS SET COMPANY_NAME = '" + companyName + "' WHERE ID = " + id + ";";
+        try {
+            SQLiteJDBC.proceedUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
