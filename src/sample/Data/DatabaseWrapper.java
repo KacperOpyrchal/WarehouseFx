@@ -56,7 +56,7 @@ public class DatabaseWrapper {
                 .setAccuntType(ADMIN)
                 .build()));
         users.add(new UserImp(builder.setUsername("Jan")
-                .setPassword("1234")
+                .setPassword("123")
                 .setAccuntType(WORKER)
                 .build()));
     }
@@ -65,14 +65,11 @@ public class DatabaseWrapper {
 
         List<Warehouse> list = new ArrayList<>();
 
-        String[] strs = {"dfsdf", "safdjsadj", "magazynek", "penis",
-                "chsfd", "asf", "hghf", "kupa",
-                "ssx", "efjsadj", "cebula i chrzan", "kdjfds",
-                "safdjsretjhadj", "blabla", "jj", "jsadj",
-                "saf", "safdjsadj", "magazynkgo", "safdjsadj",
-                "saaaa", "plmjf", "jakismagazyn"};
+        String[] strs = {"Magazyn warzyw", "Magazyn Owocow", "Magazyn Owocow 2", "Magazyn Samochodowy",
+                "Magazyn ksiazek", "Magazyn mebli", "Magazyn dzikow", "Magazyn mikelow",
+                "Magazyn komputerow", "Magazyn gier"};
 
-        for(int i = 0; i < 20; ++i) {
+        for(int i = 0; i < strs.length; ++i) {
             Warehouse warehouse = new Warehouse(i,strs[i], i, new Manager(), new ArrayList<>(), new ArrayList<>());
             list.add(warehouse);
         }

@@ -26,6 +26,8 @@ class GeneralTableView<T extends Updatable> implements View {
     private List<T> items;
     private List<Label> labels;
 
+    private Button logOut = button("Log out");
+
     private GridPane gridPane = gridPane();
 
     public GeneralTableView(List<T>  items, Label... labels) {
@@ -48,14 +50,15 @@ class GeneralTableView<T extends Updatable> implements View {
         gridPane.setVgap(2);
         gridPane.setAlignment(Pos.CENTER);
 
-        VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(scrollPane);
+        VBox vBox = new VBox(15);
+        vBox.getChildren().addAll(scrollPane, logOut);
+        vBox.setAlignment(Pos.CENTER);
         return vBox;
     }
 
     @Override
     public void setUpListeners() {
-        // no-op
+        logOut.setOnAction(event -> GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(new LoginView(), "Login")));
     }
 
     private void fillGrid() {

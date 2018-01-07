@@ -4,6 +4,7 @@ import com.sun.tools.javac.util.Pair;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,5 +70,13 @@ public class Equipment implements Updatable {
         list.add(new MenuItem(name, () -> name.toString()));
         list.add(new MenuItem("Section", () -> "".toString()));
         return list;
+    }
+
+    @Override
+    public void writeToFile(PrintWriter printWriter) {
+        printWriter.println( id +
+                ", " + name +
+                ", " + section.getId());
+        printWriter.flush();
     }
 }

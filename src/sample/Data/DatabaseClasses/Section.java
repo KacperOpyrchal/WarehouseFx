@@ -4,6 +4,7 @@ import com.sun.tools.javac.util.Pair;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,5 +113,26 @@ public class Section implements Updatable {
         list.add(new MenuItem("Employees", () -> "".toString()));
         list.add(new MenuItem("Equipment", () -> "".toString()));
         return list;
+    }
+
+    @Override
+    public void writeToFile(PrintWriter printWriter) {
+        printWriter.println(id +
+                ", " + name +
+                ", " + manager.getId() +
+                ", " + warehouse.getId());
+        for (Product product : products) {
+            printWriter.print(product.getId() + ", ");
+        }
+        printWriter.println();
+        for (Employee employee : employees) {
+            printWriter.print(employee.getId() + ", ");
+        }
+        printWriter.println();
+        for (Equipment equipment : equipment) {
+            printWriter.print(equipment.getId() + ", ");
+        }
+        printWriter.println();
+        printWriter.flush();
     }
 }

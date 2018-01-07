@@ -4,6 +4,7 @@ import com.sun.tools.javac.util.Pair;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import sample.Data.DatabaseWrapper;
@@ -18,27 +19,38 @@ import static sample.Tools.SceneProvider.*;
 
 public class WelcomeView implements View{
 
-    private Label welcome = label("");
-    private Button logOut = button("Log out");
+    private Button warehouseButton = button("Warehouses");
+    private Button employeeButton = button("Employees");
+    private Button equipmentButton = button("Equipments");
+    private Button managerButton = button("Managers");
+    private Button productButton = button("Products");
+    private Button providerButton = button("Providers");
+    private Button sectionButton = button("Sections");
 
     @Override
     public Pane getPane() {
         setUpListeners();
 
-        VBox vBox = new VBox(10);
-        vBox.setAlignment(Pos.CENTER);
 
-        List<Warehouse> list = DatabaseWrapper.loadAllWarehouses();
-        GeneralTableView<Warehouse> generalTableView = new GeneralTableView<>(list,
-                label("ID"), label("Name"), label("Capacity"));
+        GridPane gridPane = SceneProvider.gridPane();
+        gridPane.addRow(0, warehouseButton, sectionButton);
+        gridPane.addRow(1, employeeButton, managerButton);
+        gridPane.addRow(2, productButton, providerButton);
+        gridPane.addRow(3, equipmentButton);
 
-        vBox.getChildren().addAll(welcome, generalTableView.getPane(), logOut);
-
-        return vBox;
+        return gridPane;
     }
 
     @Override
     public void setUpListeners() {
-        logOut.setOnAction(event -> GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(new LoginView(), "Login")));
+        warehouseButton.setOnAction(e -> {
+            GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(TableViewGenarator.getWarehouseView(), "Warehauses"));
+        });
+    }
+
+    private Button button(String str) {
+        Button btn = submitButton(str);
+        btn.setMinWidth(300);
+        return btn;
     }
 }

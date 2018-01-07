@@ -4,6 +4,7 @@ import com.sun.tools.javac.util.Pair;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,19 +17,19 @@ public class Product implements Updatable {
     private double price;
     private double weight;
     private int amount;
-    private List<Section> sections;
+    private Section section;
     private List<Provider> providers;
     private List<Item> list = null;
 
     public Product() {
     }
 
-    public Product(int id, String name, double price, double weight, int amount, List<Section> sections, List<Provider> providers) {
+    public Product(int id, String name, double price, double weight, int amount, Section section, List<Provider> providers) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.weight = weight;
-        this.sections = sections;
+        this.section = section;
         this.providers = providers;
     }
 
@@ -64,12 +65,12 @@ public class Product implements Updatable {
         this.weight = weight;
     }
 
-    public List<Section> getSections() {
-        return sections;
+    public Section getSections() {
+        return section;
     }
 
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
+    public void setSections(Section section) {
+        this.section = section;
     }
 
     public List<Provider> getProviders() {
@@ -114,5 +115,20 @@ public class Product implements Updatable {
         list.add(new MenuItem("Providers", ()->"".toString()));
         return list;
 
+    }
+
+    @Override
+    public void writeToFile(PrintWriter printWriter) {
+        printWriter.println(id +
+                ", " + name +
+                ", " + price +
+                ", " + weight +
+                ", " + amount +
+                ", " + section.getId());
+        for (Provider provider: providers) {
+            printWriter.print(provider.getId() + ", ");
+        }
+        printWriter.println();
+        printWriter.flush();
     }
 }

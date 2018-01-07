@@ -85,7 +85,6 @@ public class SceneProvider {
         SpinnerValueFactory<AccountType> factory = new SpinnerValueFactory.ListSpinnerValueFactory<AccountType>(types);
         Spinner spinner = new Spinner();
         spinner.setValueFactory(factory);
-
         return spinner;
     }
 

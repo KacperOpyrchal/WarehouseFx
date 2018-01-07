@@ -4,6 +4,7 @@ import com.sun.tools.javac.util.Pair;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,19 @@ public class Employee implements Updatable {
     private Section section;
     private Manager manager;
     private List<Item> list = null;
+
+    @Override
+    public void writeToFile(PrintWriter printWriter) {
+        printWriter.println(id +
+                ", " + name +
+                ", " + surname +
+                ", " + position +
+                ", " + salary +
+                ", " + section.getId() +
+                ", " + manager.getId());
+
+        printWriter.flush();
+    }
 
     public Employee() {
     }

@@ -3,6 +3,7 @@ package sample.Data.DatabaseClasses;
 import com.sun.tools.javac.util.Pair;
 import sample.Tools.Item;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 public interface Updatable {
@@ -12,4 +13,6 @@ public interface Updatable {
     List<Pair<String, String>> getUpdatableList();
 
     List<Item> toItemsList();
+
+    void writeToFile(PrintWriter printWriter);
 }

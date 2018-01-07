@@ -4,6 +4,7 @@ import com.sun.tools.javac.util.Pair;
 import sample.Tools.Item;
 import sample.Tools.MenuItem;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,6 +89,23 @@ public class Warehouse implements Updatable {
         list.add(new MenuItem("Providers"));
         list.add(new MenuItem("Sections"));
         return list;
+    }
+
+    @Override
+    public void writeToFile(PrintWriter printWriter) {
+        printWriter.println(id +
+                ", " + name +
+                ", " + capacity +
+                ", " + manager.getId());
+        for (Provider provider : providers) {
+            printWriter.print(provider.getId() + ", ");
+        }
+        printWriter.println();
+        for (Section section : sections) {
+            printWriter.print(section.getId() + ", ");
+        }
+        printWriter.println();
+        printWriter.flush();
     }
 
     @Override
