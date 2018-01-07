@@ -46,6 +46,30 @@ public class WelcomeView implements View{
         warehouseButton.setOnAction(e -> {
             GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(TableViewGenarator.getWarehouseView(), "Warehauses"));
         });
+
+        employeeButton.setOnAction(e -> {
+            GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(TableViewGenarator.getEmployeeView(), "Employee"));
+        });
+
+        equipmentButton.setOnAction(e -> {
+            GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(TableViewGenarator.getEquipmentView(), "Equipment"));
+        });
+
+        managerButton.setOnAction(e -> {
+            GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(TableViewGenarator.getManagerView(), "Manager"));
+        });
+
+        productButton.setOnAction(e -> {
+            GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(TableViewGenarator.getProductView(), "Product"));
+        });
+
+        providerButton.setOnAction(e -> {
+            GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(TableViewGenarator.getProviderView(), "Provider"));
+        });
+
+        sectionButton.setOnAction(e -> {
+            GlobalStage.getGlobalStage().introduceNewScene(new Pair<>(TableViewGenarator.getSectionView(), "Section"));
+        });
     }
 
     private Button button(String str) {

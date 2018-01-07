@@ -2,8 +2,7 @@ package sample.Data;
 
 import sample.Data.Builders.CredentialsBuilder;
 import sample.Data.Builders.UserDataBuilder;
-import sample.Data.DatabaseClasses.Manager;
-import sample.Data.DatabaseClasses.Warehouse;
+import sample.Data.DatabaseClasses.*;
 import sample.Data.Users.User;
 import sample.Data.Users.UserData;
 import sample.Data.Users.UserImp;
@@ -70,4 +69,57 @@ public class DatabaseWrapper {
         return null;
     }
 
+    public static List<Employee> loadAllEmployee() {
+        try {
+            return Employee.getTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Equipment> loadAllEquipment() {
+        try {
+            return Equipment.getTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Manager> loadAllManager() {
+        try {
+            return Manager.getTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Product> loadAllProduct() {
+        try {
+            return Product.getTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Provider> loadAllProvider() {
+        try {
+            return Provider.getTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Section> loadAllSection() {
+        try {
+            return Section.getTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
