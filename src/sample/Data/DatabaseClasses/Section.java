@@ -75,6 +75,11 @@ public class Section implements Updatable {
 
     }
 
+    @Override
+    public void deleteFromDatabase() {
+        UpdatableWrapper.deleteFromDatabase("SECTIONS", id);
+    }
+
     public int getWarehouseID() {
         return warehouseID;
     }

@@ -72,6 +72,11 @@ public class Warehouse implements Updatable {
         }
     }
 
+    @Override
+    public void deleteFromDatabase() {
+        UpdatableWrapper.deleteFromDatabase("WAREHOUSES", id);
+    }
+
     public int getId() {
         return id;
     }

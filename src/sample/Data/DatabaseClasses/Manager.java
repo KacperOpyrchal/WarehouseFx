@@ -73,6 +73,11 @@ public class Manager implements Updatable {
 
     }
 
+    @Override
+    public void deleteFromDatabase() {
+        UpdatableWrapper.deleteFromDatabase("MANAGERS", id);
+    }
+
     public int getSectionID() {
         return sectionID;
     }
@@ -118,7 +123,7 @@ public class Manager implements Updatable {
         id = Integer.parseInt(values.get(0));
         name = values.get(1);
         surname = values.get(2);
-        salary = Integer.parseInt(values.get(3));
+        salary = Float.parseFloat(values.get(3));
 
         if(list != null) {
             list.get(0).updateItem(name);

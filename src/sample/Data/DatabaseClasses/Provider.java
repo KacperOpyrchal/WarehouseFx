@@ -56,6 +56,11 @@ public class Provider implements Updatable {
 
     }
 
+    @Override
+    public void deleteFromDatabase() {
+        UpdatableWrapper.deleteFromDatabase("PROVIDERS", id);
+    }
+
     public static List<Provider> getTable() throws Exception {
         String query = "SELECT * FROM PROVIDERS";
         List<Provider> list = new ArrayList<>();

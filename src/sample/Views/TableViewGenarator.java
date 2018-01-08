@@ -16,7 +16,7 @@ public class TableViewGenarator {
 
     static GeneralTableView<Employee>  getEmployeeView() {
         return new GeneralTableView<>(DatabaseWrapper.loadAllEmployee(),
-                label("ID"), label("Name"), label("Capacity"));
+                label("Name"), label("Surname"), label("Manager"));
     }
 
     static GeneralTableView<Equipment>  getEquipmentView() {

@@ -78,6 +78,11 @@ public class Product implements Updatable {
 
     }
 
+    @Override
+    public void deleteFromDatabase() {
+        UpdatableWrapper.deleteFromDatabase("PRODUCTS", id);
+    }
+
     public int getId() {
         return id;
     }

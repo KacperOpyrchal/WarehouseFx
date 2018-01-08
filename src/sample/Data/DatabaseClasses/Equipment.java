@@ -64,6 +64,11 @@ public class Equipment implements Updatable {
 
     }
 
+    @Override
+    public void deleteFromDatabase() {
+        UpdatableWrapper.deleteFromDatabase("EQUIPMENT", id);
+    }
+
     public String getName() {
         return name;
     }

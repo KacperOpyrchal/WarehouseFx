@@ -25,7 +25,7 @@ public class UserImp implements User {
     }
 
     public static void createTable() throws SQLException {
-        String sql = "CREATE TABLE EMPLOYEES " +
+        String sql = "CREATE TABLE USERS " +
                 "(USERNAME TEXT PRIMARY KEY NOT NULL," +
                 " PASSWORD TEXT NOT NULL, " +
                 " ACCOUNT_TYPE TEXT NOT NULL);";

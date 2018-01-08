@@ -82,6 +82,11 @@ public class Employee implements Updatable {
     }
 
     @Override
+    public void deleteFromDatabase() {
+        UpdatableWrapper.deleteFromDatabase("EMPLOYEES", id);
+    }
+
+    @Override
     public void writeToFile(PrintWriter printWriter) {
         printWriter.println(id +
                 ", '" + name +
@@ -188,6 +193,7 @@ public class Employee implements Updatable {
     public List<Item> toItemsList() {
         list = new ArrayList<>();
         list.add(new MenuItem(name));
+        list.add(new MenuItem(surname));
         list.add(new MenuItem("Manager"));
         return list;
     }
