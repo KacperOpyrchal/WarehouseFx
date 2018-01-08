@@ -96,6 +96,7 @@ class GeneralTableView<T extends Updatable> implements View {
                 item.getButton().setVisible(false);
                 item.getButton().setManaged(false);
             }
+            items.get(row).deleteFromDatabase();
             editButton.setVisible(false);
             editButton.setManaged(false);
             button.setVisible(false);
