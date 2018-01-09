@@ -56,10 +56,6 @@ public class Equipment implements Updatable {
         name = values.get(1);
         sectionID = 0;
 
-        if(list != null) {
-            list.get(0).updateItem(name);
-        }
-
         String sql = "INSERT INTO EQUIPMENT(ID, NAME, SECTION) VALUES (" +
                 id + ", '" +
                 name + "', " +
@@ -126,16 +122,14 @@ public class Equipment implements Updatable {
     @Override
     public List<Item> toItemsList() {
         list = new ArrayList<>();
-        list.add(new MenuItem(name, () -> name.toString()));
-        list.add(new MenuItem("Section", () -> "".toString()));
+        list.add(new MenuItem(id+""));
+        list.add(new MenuItem(name));
+        list.add(new MenuItem("Section"));
         return list;
     }
 
     @Override
-    public void writeToFile(PrintWriter printWriter) {
-        printWriter.println( id +
-                ", " + name +
-                ", " + sectionID);
-        printWriter.flush();
+    public int getID() {
+        return id;
     }
 }

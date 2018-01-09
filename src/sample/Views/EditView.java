@@ -6,19 +6,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import sample.Data.DatabaseClasses.Updatable;
-import sample.Tools.SceneProvider;
+import sample.Tools.Action;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static sample.Tools.SceneProvider.*;
 
-public class EditView implements View{
+public class EditView extends Floatable {
 
     private List<TextField> fields = new ArrayList<>();
     private GridPane panes = gridPane();
@@ -27,10 +25,11 @@ public class EditView implements View{
 
     private Updatable updatable;
 
-    Stage stage;
+    private Action reload;
 
-    public EditView(Updatable updatable) {
+    public EditView(Updatable updatable, Action reload) {
         this.updatable = updatable;
+        this.reload = reload;
 
         int i = 0;
         for(Pair<String, String> str : updatable.getUpdatableList()) {
@@ -45,9 +44,7 @@ public class EditView implements View{
         }
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
+
 
     private void update() {
         List<String> values = new ArrayList<>();
@@ -57,8 +54,8 @@ public class EditView implements View{
         }
 
         updatable.update(values);
-
         stage.close();
+        reload.call();
     }
 
     @Override

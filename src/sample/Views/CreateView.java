@@ -8,8 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import sample.Data.DatabaseClasses.Updatable;
+import sample.Tools.Action;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,26 +17,28 @@ import java.util.List;
 import static sample.Tools.SceneProvider.submitButton;
 import static sample.Tools.SceneProvider.textField;
 
-public class CreateView implements View {
+public class CreateView extends Floatable {
 
     private List<TextField> fields = new ArrayList<>();
     private GridPane panes = new GridPane();
 
     private Button updateButton = submitButton("Update");
 
-    private List<Updatable> updatable;
+    private Updatable updatable;
 
-    Stage stage;
+    private Action reload;
 
-    public CreateView(List<Updatable> updatable) {
+    public CreateView(Updatable updatable, Action reload)  {
         this.updatable = updatable;
+        this.reload = reload;
 
         int i = 0;
-        for(Pair<String, String> str : updatable.get(0).getUpdatableList()) {
+        for(Pair<String, String> str : updatable.getUpdatableList()) {
             TextField textField = textField();
             fields.add(textField);
             panes.addRow(i, new Label(str.fst), textField);
             if(i == 0) {
+                textField.setText((updatable.getID()+1)+"");
                 textField.setDisable(true);
             }
 
@@ -44,9 +46,6 @@ public class CreateView implements View {
         }
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
 
     private void update() {
         List<String> values = new ArrayList<>();
@@ -55,9 +54,9 @@ public class CreateView implements View {
             values.add(field.getText());
         }
 
-//        updatable.update(values);
-
+        updatable.addToDatabase(values);
         stage.close();
+        reload.call();
     }
 
     @Override
@@ -65,8 +64,7 @@ public class CreateView implements View {
         setUpListeners();
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(panes);
-        vBox.getChildren().add(updateButton);
+        vBox.getChildren().addAll(panes, updateButton);
         vBox.setAlignment(Pos.CENTER);
 
         return vBox;
@@ -78,5 +76,4 @@ public class CreateView implements View {
             update();
         });
     }
-
 }

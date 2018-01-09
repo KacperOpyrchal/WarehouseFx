@@ -159,18 +159,16 @@ public class Manager implements Updatable {
     @Override
     public List<Item> toItemsList() {
         list = new ArrayList<>();
-        list.add(new MenuItem(name, () -> name.toString()));
+        list.add(new MenuItem(id+""));
+        list.add(new MenuItem(name));
+        list.add(new MenuItem(surname));
+        list.add(new MenuItem(salary+""));
         list.add(new MenuItem("Sections", () -> "".toString()));
         return list;
     }
 
     @Override
-    public void writeToFile(PrintWriter printWriter) {
-        printWriter.println(id +
-                ", " + name +
-                ", " + surname +
-                ", " + salary +
-                ", " + sectionID);
-        printWriter.flush();
+    public int getID() {
+        return id;
     }
 }

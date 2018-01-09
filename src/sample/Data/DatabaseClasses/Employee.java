@@ -74,10 +74,6 @@ public class Employee implements Updatable {
         sectionID = 0;
         managerID = 0;
 
-        if(list != null) {
-            list.get(0).updateItem(name);
-        }
-
         String sql = "INSERT INTO EMPLOYEES(ID, NAME, SURNAME, POSITION, SALARY, SECTION, MANAGER) VALUES (" +
                 id + ", '" +
                 name + "', '" +
@@ -99,16 +95,8 @@ public class Employee implements Updatable {
     }
 
     @Override
-    public void writeToFile(PrintWriter printWriter) {
-        printWriter.println(id +
-                ", '" + name +
-                "', '" + surname +
-                "', '" + position +
-                "', " + salary +
-                ", " + sectionID +
-                ", " + managerID);
-
-        printWriter.flush();
+    public int getID() {
+        return id;
     }
 
     public String getName() {
@@ -176,7 +164,7 @@ public class Employee implements Updatable {
         salary = Double.parseDouble(values.get(4));
 
         if(list != null) {
-            list.get(0).updateItem(name);
+            list.get(1).updateItem(name);
         }
 
         String sql = "UPDATE EMPLOYEES SET " +
@@ -204,8 +192,11 @@ public class Employee implements Updatable {
     @Override
     public List<Item> toItemsList() {
         list = new ArrayList<>();
+        list.add(new MenuItem(id+""));
         list.add(new MenuItem(name));
         list.add(new MenuItem(surname));
+        list.add(new MenuItem(position));
+        list.add(new MenuItem(salary+""));
         list.add(new MenuItem("Manager"));
         return list;
     }

@@ -179,25 +179,19 @@ public class Product implements Updatable {
     @Override
     public List<Item> toItemsList() {
         list = new ArrayList<>();
-        list.add(new MenuItem(name, () -> name.toString()));
-        list.add(new MenuItem("Sections", () -> "".toString()));
-        list.add(new MenuItem("Providers", ()->"".toString()));
+        list.add(new MenuItem(id+""));
+        list.add(new MenuItem(name));
+        list.add(new MenuItem(price+""));
+        list.add(new MenuItem(weight+""));
+        list.add(new MenuItem(amount+""));
+        list.add(new MenuItem("Sections"));
+        list.add(new MenuItem("Providers"));
         return list;
 
     }
 
     @Override
-    public void writeToFile(PrintWriter printWriter) {
-        printWriter.println(id +
-                ", " + name +
-                ", " + price +
-                ", " + weight +
-                ", " + amount +
-                ", " + sectionID);
-        for (Provider provider: providers) {
-            printWriter.print(provider.getId() + ", ");
-        }
-        printWriter.println();
-        printWriter.flush();
+    public int getID() {
+        return id;
     }
 }

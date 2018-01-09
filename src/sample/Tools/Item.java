@@ -12,7 +12,7 @@ public interface Item {
 
     void editValue(String value);
 
-    void deleteValue();
+    void delete();
 
     Button getButton();
 

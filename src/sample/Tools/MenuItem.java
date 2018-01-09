@@ -44,7 +44,7 @@ public class MenuItem implements Item {
     }
 
     @Override
-    public void deleteValue() {
+    public void delete() {
         name = null;
     }
 

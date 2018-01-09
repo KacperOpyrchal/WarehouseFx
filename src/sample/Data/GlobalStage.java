@@ -4,7 +4,9 @@ import com.sun.tools.javac.util.Pair;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.Tools.SceneProvider;
+import sample.Views.CreateView;
 import sample.Views.EditView;
+import sample.Views.Floatable;
 import sample.Views.View;
 
 public class GlobalStage {
@@ -23,14 +25,14 @@ public class GlobalStage {
         stage.setScene(SceneProvider.generalUseScene(view));
     }
 
-    public void introduceNewStage(Pair<EditView, String> view) {
-            Scene scene = new Scene(view.fst.getPane(), 400, 400);
-            Stage stage = new Stage();
-            stage.setTitle(view.snd);
-            stage.setScene(scene);
-            stage.show();
+    public void introduceNewStage(Pair<Floatable, String> view) {
+        Scene scene = new Scene(view.fst.getView().getPane(), 400, 400);
+        Stage stage = new Stage();
+        stage.setTitle(view.snd);
+        stage.setScene(scene);
+        stage.show();
 
-            view.fst.setStage(stage);
+        view.fst.withStage(stage);
     }
 
     public void getSceneFromStack(Pair<View, String> view) {

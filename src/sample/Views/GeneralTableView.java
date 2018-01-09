@@ -6,14 +6,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import sample.Data.DatabaseClasses.Updatable;
 import sample.Data.GlobalStage;
+import sample.Tools.Action;
 import sample.Tools.Item;
 import sample.Tools.SceneProvider;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +31,8 @@ class GeneralTableView<T extends Updatable> implements View {
 
     private GridPane gridPane = gridPane();
 
+    private Action reload;
+
     public GeneralTableView(List<T>  items, Label... labels) {
         this.labels = Arrays.asList(labels);
         this.items = items;
@@ -41,6 +44,22 @@ class GeneralTableView<T extends Updatable> implements View {
         setUpListeners();
     }
 
+    public void reload(List<T>  items, Label... labels) {
+        this.labels = Arrays.asList(labels);
+        this.items = items;
+        this.fields = new ArrayList<>();
+        for(T t : items) {
+            this.fields.add(t.toItemsList());
+        }
+        fillGrid();
+        setUpListeners();
+
+    }
+
+    public void withReload(Action reload) {
+        this.reload = reload;
+    }
+
     @Override
     public Pane getPane() {
         setUpListeners();
@@ -50,8 +69,12 @@ class GeneralTableView<T extends Updatable> implements View {
         gridPane.setVgap(2);
         gridPane.setAlignment(Pos.CENTER);
 
+        HBox hBox = new HBox(15);
+        hBox.getChildren().addAll(generateCreateButton(), logOut);
+        hBox.setAlignment(Pos.CENTER);
+
         VBox vBox = new VBox(15);
-        vBox.getChildren().addAll(scrollPane, logOut);
+        vBox.getChildren().addAll(scrollPane, hBox);
         vBox.setAlignment(Pos.CENTER);
         return vBox;
     }
@@ -77,11 +100,21 @@ class GeneralTableView<T extends Updatable> implements View {
 
     }
 
+    private Button generateCreateButton() {
+        Button button = SceneProvider.greenButton("Create");
+        button.setOnAction(e -> {
+            CreateView createView = new CreateView(items.get(items.size() - 1), reload);
+            GlobalStage.getGlobalStage().introduceNewStage(new Pair<>(createView, "Create"));
+        });
+
+        return button;
+    }
+
     private Button generateEditButton(int row) {
         Button button = SceneProvider.greenButton("Edit");
         button.setOnAction(e -> {
-            EditView editView = new EditView(items.get(row));
-            GlobalStage.getGlobalStage().introduceNewStage(new Pair<>(editView, "Warehouse"));
+            EditView editView = new EditView(items.get(row), reload);
+            GlobalStage.getGlobalStage().introduceNewStage(new Pair<>(editView, "Edit"));
         });
 
         return button;
@@ -90,7 +123,7 @@ class GeneralTableView<T extends Updatable> implements View {
     private Button generateDeleteButton(int row, Button editButton) {
         Button button = SceneProvider.redButton("Delete");
         button.setOnAction(e -> {
-            fields.get(row).get(0).deleteValue();
+            fields.get(row).get(0).delete();
             for(Item item : fields.get(row)) {
                 item.getButton().setText("");
                 item.getButton().setVisible(false);

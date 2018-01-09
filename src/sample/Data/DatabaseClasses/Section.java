@@ -67,10 +67,6 @@ public class Section implements Updatable {
         managerID = 0;
         warehouseID = 0;
 
-        if(list != null) {
-            list.get(0).updateItem(name);
-        }
-
         String sql = "INSERT INTO SECTIONS(ID, NAME, MANAGER, WAREHOUSE) VALUES ( " +
                 id + ", '" +
                 name + "', " +
@@ -171,32 +167,17 @@ public class Section implements Updatable {
     @Override
     public List<Item> toItemsList() {
         list = new ArrayList<>();
-        list.add(new MenuItem(name, () -> name.toString()));
-        list.add(new MenuItem("Warehouse", () -> "".toString()));
-        list.add(new MenuItem("Products", () -> "".toString()));
-        list.add(new MenuItem("Employees", () -> "".toString()));
-        list.add(new MenuItem("Equipment", () -> "".toString()));
+        list.add(new MenuItem(id+""));
+        list.add(new MenuItem(name));
+        list.add(new MenuItem("Warehouse"));
+        list.add(new MenuItem("Products"));
+        list.add(new MenuItem("Employees"));
+        list.add(new MenuItem("Equipment"));
         return list;
     }
 
     @Override
-    public void writeToFile(PrintWriter printWriter) {
-        printWriter.println(id +
-                ", " + name +
-                ", " + managerID +
-                ", " + warehouseID);
-        for (Product product : products) {
-            printWriter.print(product.getId() + ", ");
-        }
-        printWriter.println();
-        for (Employee employee : employees) {
-            printWriter.print(employee.getId() + ", ");
-        }
-        printWriter.println();
-        for (Equipment equipment : equipment) {
-            printWriter.print(equipment.getId() + ", ");
-        }
-        printWriter.println();
-        printWriter.flush();
+    public int getID() {
+        return id;
     }
 }

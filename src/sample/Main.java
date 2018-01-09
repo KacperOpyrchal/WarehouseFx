@@ -13,7 +13,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         getGlobalStage().initStage(primaryStage);
-        primaryStage.setTitle("Projekt na wzorce czy cos");
+        primaryStage.setTitle("Projekt");
         View loginView = new LoginView();
         getGlobalStage().introduceNewScene(new Pair<>(loginView, "Login"));
         primaryStage.show();

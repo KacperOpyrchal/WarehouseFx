@@ -48,10 +48,6 @@ public class Provider implements Updatable {
         id = Integer.parseInt(values.get(0));
         companyName = values.get(1);
 
-        if(list != null) {
-            list.get(0).updateItem(companyName);
-        }
-
         String sql = "INSERT INTO PROVIDERS(ID, COMPANY_NAME) VALUES ( " +
                 id + ", '" +
                 companyName + "');";
@@ -136,24 +132,15 @@ public class Provider implements Updatable {
     @Override
     public List<Item> toItemsList() {
         list = new ArrayList<>();
-        list.add(new MenuItem(companyName, () -> companyName.toString()));
-        list.add(new MenuItem("Products", () -> "".toString()));
-        list.add(new MenuItem("Warehouses", ()->"".toString()));
+        list.add(new MenuItem(id+""));
+        list.add(new MenuItem(companyName));
+        list.add(new MenuItem("Products"));
+        list.add(new MenuItem("Warehouses"));
         return list;
     }
 
     @Override
-    public void writeToFile(PrintWriter printWriter) {
-        printWriter.println(id +
-                ", " + companyName);
-        for (Product product : products) {
-            printWriter.print(product.getId() + ", ");
-        }
-        printWriter.println();
-        for (Warehouse warehouse : warehouses) {
-            printWriter.print(warehouse.getId() + ", ");
-        }
-        printWriter.println();
-        printWriter.flush();
+    public int getID() {
+        return id;
     }
 }

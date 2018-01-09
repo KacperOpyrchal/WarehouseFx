@@ -65,12 +65,6 @@ public class Warehouse implements Updatable {
         capacity = Integer.parseInt(values.get(2));
         managerID = 0;
 
-        if(list != null) {
-            list.get(0).updateItem(id + "");
-            list.get(1).updateItem(name);
-            list.get(2).updateItem(capacity + "");
-        }
-
         String sql = "INSERT INTO WAREHOUSES(ID, NAME, CAPACITY, MANAGER) VALUES ( " +
                 id + ", '" +
                 name + "', " +
@@ -148,23 +142,6 @@ public class Warehouse implements Updatable {
     }
 
     @Override
-    public void writeToFile(PrintWriter printWriter) {
-        printWriter.println(id +
-                ", " + name +
-                ", " + capacity +
-                ", " + managerID);
-        for (Provider provider : providers) {
-            printWriter.print(provider.getId() + ", ");
-        }
-        printWriter.println();
-        for (Section section : sections) {
-            printWriter.print(section.getId() + ", ");
-        }
-        printWriter.println();
-        printWriter.flush();
-    }
-
-    @Override
     public List<Pair<String, String>> getUpdatableList() {
         return pairList(pair("ID", id + ""), pair("Name", name), pair("Capacity", capacity + ""));
     }
@@ -190,5 +167,10 @@ public class Warehouse implements Updatable {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public int getID() {
+        return id;
     }
 }
