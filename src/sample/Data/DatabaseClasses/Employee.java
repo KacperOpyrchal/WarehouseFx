@@ -65,7 +65,19 @@ public class Employee implements Updatable {
     }
 
     @Override
-    public void addToDatabase() {
+    public void addToDatabase(List<String> values) {
+        id = Integer.parseInt(values.get(0));
+        name = values.get(1);
+        surname = values.get(2);
+        position = values.get(3);
+        salary = Double.parseDouble(values.get(4));
+        sectionID = 0;
+        managerID = 0;
+
+        if(list != null) {
+            list.get(0).updateItem(name);
+        }
+
         String sql = "INSERT INTO EMPLOYEES(ID, NAME, SURNAME, POSITION, SALARY, SECTION, MANAGER) VALUES (" +
                 id + ", '" +
                 name + "', '" +

@@ -51,7 +51,15 @@ public class Equipment implements Updatable {
     }
 
     @Override
-    public void addToDatabase() {
+    public void addToDatabase(List<String> values) {
+        id = Integer.parseInt(values.get(0));
+        name = values.get(1);
+        sectionID = 0;
+
+        if(list != null) {
+            list.get(0).updateItem(name);
+        }
+
         String sql = "INSERT INTO EQUIPMENT(ID, NAME, SECTION) VALUES (" +
                 id + ", '" +
                 name + "', " +

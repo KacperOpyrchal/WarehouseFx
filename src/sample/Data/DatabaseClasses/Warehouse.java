@@ -59,7 +59,18 @@ public class Warehouse implements Updatable {
     }
 
     @Override
-    public void addToDatabase() {
+    public void addToDatabase(List<String> values) {
+        id = Integer.parseInt(values.get(0));
+        name = values.get(1);
+        capacity = Integer.parseInt(values.get(2));
+        managerID = 0;
+
+        if(list != null) {
+            list.get(0).updateItem(id + "");
+            list.get(1).updateItem(name);
+            list.get(2).updateItem(capacity + "");
+        }
+
         String sql = "INSERT INTO WAREHOUSES(ID, NAME, CAPACITY, MANAGER) VALUES ( " +
                 id + ", '" +
                 name + "', " +

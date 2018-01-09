@@ -58,7 +58,17 @@ public class Manager implements Updatable {
     }
 
     @Override
-    public void addToDatabase() {
+    public void addToDatabase(List<String> values) {
+        id = Integer.parseInt(values.get(0));
+        name = values.get(1);
+        surname = values.get(2);
+        salary = Float.parseFloat(values.get(3));
+        sectionID = 0;
+
+        if(list != null) {
+            list.get(0).updateItem(name);
+        }
+
         String sql = "INSERT INTO MANAGERS(ID, NAME, SURNAME, SALARY, SECTION) VALUES (" +
                 id + ", '" +
                 name + "', '" +

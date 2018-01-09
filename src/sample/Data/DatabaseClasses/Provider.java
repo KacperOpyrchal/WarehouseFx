@@ -44,7 +44,14 @@ public class Provider implements Updatable {
 
     }
     @Override
-    public void addToDatabase() {
+    public void addToDatabase(List<String> values) {
+        id = Integer.parseInt(values.get(0));
+        companyName = values.get(1);
+
+        if(list != null) {
+            list.get(0).updateItem(companyName);
+        }
+
         String sql = "INSERT INTO PROVIDERS(ID, COMPANY_NAME) VALUES ( " +
                 id + ", '" +
                 companyName + "');";
@@ -66,7 +73,7 @@ public class Provider implements Updatable {
         List<Provider> list = new ArrayList<>();
         ResultSet cursor = SQLiteJDBC.proceedQuery(query);
         while ( cursor.next() ) {
-            list.add(new Provider(cursor.getString("NAME"), cursor.getInt("ID"), null, null));
+            list.add(new Provider(cursor.getString("COMPANY_NAME"), cursor.getInt("ID"), null, null));
         }
         return list;
     }

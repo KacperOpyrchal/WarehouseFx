@@ -16,7 +16,7 @@ public interface Updatable {
 
     void writeToFile(PrintWriter printWriter);
 
-    void addToDatabase();
+    void addToDatabase(List<String> values);
 
     void deleteFromDatabase();
 }

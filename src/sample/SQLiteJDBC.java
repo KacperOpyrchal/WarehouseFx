@@ -29,6 +29,7 @@ public class SQLiteJDBC {
         statement.execute(query);
     }
 
+    /*
     public static void initDemoDatabase() throws SQLException {
         int size = 7;
         UserImp.createTable();
@@ -36,7 +37,7 @@ public class SQLiteJDBC {
         Employee.createTable();
         for(int i = 0; i < size; i++) {
             Employee sample = new Employee(("Name" + i), ("Surname" + i), i * 1000.0, i, "standard", i, i);
-            sample.addToDatabase();
+            sample.addToDatabase(sample.toItemsList());
         }
 
         Equipment.createTable();
@@ -75,6 +76,8 @@ public class SQLiteJDBC {
             sample.addToDatabase();
         }
     }
+
+*/
 
     public static void dropAll() throws Exception {
         String[] tables = {"EMPLOYEES", "EQUIPMENT", "MANAGERS", "PRODUCTS", "PROVIDERS", "SECTIONS", "WAREHOUSES", "USERS"};

@@ -62,7 +62,14 @@ public class Product implements Updatable {
     }
 
     @Override
-    public void addToDatabase() {
+    public void addToDatabase(List<String> values) {
+        id = Integer.parseInt(values.get(0));
+        name = values.get(1);
+        price = Double.parseDouble(values.get(2));
+        weight = Double.parseDouble(values.get(3));
+        amount = Integer.parseInt(values.get(4));
+        sectionID = 0;
+
         String sql = "INSERT INTO PRODUCTS VALUES( " +
                 id + ", '" +
                 name + "', " +
