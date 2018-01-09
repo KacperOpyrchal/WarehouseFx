@@ -62,7 +62,7 @@ public class Manager implements Updatable {
         id = Integer.parseInt(values.get(0));
         name = values.get(1);
         surname = values.get(2);
-        salary = Float.parseFloat(values.get(3));
+        salary = Double.parseDouble(values.get(3));
         sectionID = 0;
 
         if(list != null) {
@@ -133,7 +133,7 @@ public class Manager implements Updatable {
         id = Integer.parseInt(values.get(0));
         name = values.get(1);
         surname = values.get(2);
-        salary = Float.parseFloat(values.get(3));
+        salary = Double.parseDouble(values.get(3));
 
         if(list != null) {
             list.get(0).updateItem(name);
